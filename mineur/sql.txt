@@ -1,0 +1,73 @@
+Sur Metabase, faire
+
+Cb de user au total ?
+  SELECT * FROM users;
+
+Cb de users européens ?
+  SELECT count(*) AS `count`
+  FROM `users`
+  LEFT JOIN `countries` `countries__via__country_id` ON `users`.`country_id` = `countries__via__country_id`.`id`
+  WHERE (`countries__via__country_id`.`country_name` = ? OR `countries__via__country_id`.`country_name` = ? ...);
+
+
+Lister posts par date de creation
+  SELECT *
+  FROM posts
+  ORDER BY posts.created_at ASC
+
+Articles avec le moins de commentaires ?
+  SELECT count(*) AS `count`, `posts__via__post_id`.`id` AS `id`
+  FROM `comments`
+  LEFT JOIN `posts` `posts__via__post_id` ON `comments`.`post_id` = `posts__via__post_id`.`id`
+  GROUP BY `posts__via__post_id`.`id`
+  ORDER BY `count` ASC, `posts__via__post_id`.`id` ASC
+  LIMIT 10
+
+Articles avec le plus de commentaires ?
+  SELECT count(*) AS `count`, `posts__via__post_id`.`id` AS `id`
+  FROM `comments`
+  LEFT JOIN `posts` `posts__via__post_id` ON `comments`.`post_id` = `posts__via__post_id`.`id`
+  GROUP BY `posts__via__post_id`.`id`
+  ORDER BY `count` DESC, `posts__via__post_id`.`id` ASC
+  LIMIT 10
+
+User ayant écrit le plus d'articles ?
+  SELECT count(*) AS `count`, `users__via__user_id`.`id` AS `id`
+  FROM `posts`
+  LEFT JOIN `users` `users__via__user_id` ON `posts`.`user_id` = `users__via__user_id`.`id`
+  GROUP BY `users__via__user_id`.`id`
+  ORDER BY `count` DESC, `users__via__user_id`.`id` ASC
+  LIMIT 1
+
+Générer une worldmap indiquant la popularité des pays
+  SELECT count(*) AS `count`, `countries__via__country_id`.`country_code` AS `country_code`
+  FROM `users`
+  LEFT JOIN `countries` `countries__via__country_id` ON `users`.`country_id` = `countries__via__country_id`.`id`
+  GROUP BY `countries__via__country_id`.`country_code`
+  ORDER BY `countries__via__country_id`.`country_code` ASC
+
+Générer un graphique indiquand l'évolution du nombre de posts par date d'ajout
+  SELECT count(*) AS `count`, str_to_date(concat(date_format(`posts`.`created_at`, '%Y-%m'), '-01'), '%Y-%m-%d') AS `created_at`
+  FROM `posts`
+  GROUP BY str_to_date(concat(date_format(`posts`.`created_at`, '%Y-%m'), '-01'), '%Y-%m-%d')
+  ORDER BY str_to_date(concat(date_format(`posts`.`created_at`, '%Y-%m'), '-01'), '%Y-%m-%d') ASC
+
+Lister tous les posts incluant le mot "qui"
+  SELECT `posts`.`id` AS `id`, `posts`.`content` AS `content`, `posts`.`created_at` AS `created_at`, `posts`.`description` AS `description`, `posts`.`title` AS `title`, `posts`.`user_id` AS `user_id`
+  FROM `posts`
+  WHERE (`posts`.`content` like ?)
+
+Générer une worldmap qui répertorie les users "jeanie"
+  SELECT count(*) AS `count`, `countries__via__country_id`.`country_code` AS `country_code`
+  FROM `users`
+  LEFT JOIN `countries` `countries__via__country_id` ON `users`.`country_id` = `countries__via__country_id`.`id`
+  WHERE `users`.`first_name` = ?
+  GROUP BY `countries__via__country_id`.`country_code`
+  ORDER BY `countries__via__country_id`.`country_code` ASC
+
+Générer une barchart de l'évolution de nouveaux users s'appelant "jeanie"
+  SELECT count(*) AS `count`, date(`users`.`created_at`) AS `created_at`
+  FROM `users`
+  WHERE `users`.`first_name` = ?
+  GROUP BY date(`users`.`created_at`)
+  ORDER BY date(`users`.`created_at`) ASC

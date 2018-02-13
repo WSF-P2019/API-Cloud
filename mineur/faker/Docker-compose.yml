@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  mysql:
+    container_name: "wsf"
+    restart: "unless-stopped"
+    image: "mysql:latest"
+    command: "--max_allowed_packet=32505856"
+    environment:
+      MYSQL_ROOT_PASSWORD: "roooot"
+      MYSQL_DATABASE: "wsf"
+      MYSQL_USER: "wsf"
+      MYSQL_PASS: "qwerty"
+    volumes:
+      - "wsf:/var/lib/mysql"
+      - "./migrations:/docker-entrypoint-initdb.d/"
+    ports:
+      - "3306:3306"
+
+volumes:
+  wsf:
