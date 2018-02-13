@@ -18,14 +18,14 @@ module.exports = {
     .then( function (data) {
         return handler.response({
             statusCode: 200,
-            data
+            data: data[0]
           }).code(200)
     })
     .catch(error => {
         return handler.response({
-            statusCode: 500,
-            error
-          }).code(500)
+            statusCode: 400,
+            error: 'Something bad happened: + explicit error'
+          }).code(400)
     })
   }
 }

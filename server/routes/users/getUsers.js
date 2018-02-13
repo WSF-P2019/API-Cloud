@@ -14,9 +14,9 @@ module.exports = {
     })
     .catch(error => {
         return handler.response({
-            statusCode: 500,
-            error
-        }).code(500)
+            statusCode: 400,
+            error: 'Something bad happened: + explicit error'
+        }).code(400)
     })
   }
 }
