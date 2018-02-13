@@ -19,6 +19,9 @@ try {
 
 const server = new Hapi.Server(settings.http);
 
+/**
+ * Users routes
+ */
 server.route(require('./routes/users/getUsers'));
 server.route(require('./routes/users/getUserById'));
 

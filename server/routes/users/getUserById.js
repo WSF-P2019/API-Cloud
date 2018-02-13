@@ -1,9 +1,5 @@
-const Hapi = require('hapi');
 const joi = require('joi');
-const db = require('knex')({
-    client: 'mysql',
-    connection: process.env.DB
-});
+const db = require('../../utils/database');
 
 module.exports = {
   method: 'GET',
