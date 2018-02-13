@@ -1,55 +1,28 @@
 'use strict';
 
 const Hapi = require('hapi');
+const joi = require('joi');
+const env = process.env.NODE_ENV || 'development';
 
-const db = require('knex')({
-    client: 'mysql',
-    connection: {
-        host : 'localhost',
-        user : 'root',
-        password : 'roooot',
-        database : 'wsf'
-    }
-});
+let settings;
+try {
+    settings = require(`./settings/${env}`);
+} catch (err) {
+    throw new Error(err);
+}
 
-// db.select().from('users').where({
-//     country_id: 22
-// })
-//     .then((data) => {
-//         console.log(`Data:`);
-//         console.log(data);
-//     })
-//     .catch((error) => {
-//         console.log(`Error: + ${error}`);
-//     })
+try {
+    process.env.DB = settings.database;
+} catch (err) {
+    throw new Error(err);
+}
 
-const server = new Hapi.Server({
-    host: 'localhost',
-    port: 8000
-});
+const server = new Hapi.Server(settings.http);
 
-server.route({
-  method: 'GET',
-  path: '/users',
-  handler: async function (request, handler) {
-    return db.select().from('users')
-    .then( function (users) {
-        return handler.response({
-            statusCode: 200,
-            data: users})
-            .code(200)
-    })
-    .catch(err => {
-        return handler.response({
-            statusCode: 500,
-            error: err})
-            .code(500)
-    })
-  }
-});
+server.route(require('./routes/users/getUsers'));
+server.route(require('./routes/users/getUsersId'));
 
 async function start() {
-
     try {
         await server.start();
     }
@@ -57,7 +30,6 @@ async function start() {
         console.log(err);
         process.exit(1);
     }
-
     console.log('Server running at:', server.info.uri);
 };
 

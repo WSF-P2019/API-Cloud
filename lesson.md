@@ -78,4 +78,4 @@ URI = A partir du /example (domaine.com/example)
 5XX = Server errors
 
 
-ForeignKey = Clef seconde, qui fait toujours référence à une PrimaryKey.
+ForeignKey = Clef secondaire, qui fait toujours référence à une PrimaryKey.
