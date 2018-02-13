@@ -12,16 +12,16 @@ const db = require('knex')({
     }
 });
 
-db.select().from('users').where({
-    country_id: 22
-})
-    .then((data) => {
-        console.log(`Data:`);
-        console.log(data);
-    })
-    .catch((error) => {
-        console.log(`Error: + ${error}`);
-    })
+// db.select().from('users').where({
+//     country_id: 22
+// })
+//     .then((data) => {
+//         console.log(`Data:`);
+//         console.log(data);
+//     })
+//     .catch((error) => {
+//         console.log(`Error: + ${error}`);
+//     })
 
 const server = new Hapi.Server({
     host: 'localhost',
@@ -30,12 +30,21 @@ const server = new Hapi.Server({
 
 server.route({
   method: 'GET',
-  path: '/hello',
+  path: '/users',
   handler: async function (request, handler) {
-    return handler.response({
-        statusCode: 200,
-        data: {}
-    }).code(200);
+    return db.select().from('users')
+    .then( function (users) {
+        return handler.response({
+            statusCode: 200,
+            data: users})
+            .code(200)
+    })
+    .catch(err => {
+        return handler.response({
+            statusCode: 500,
+            error: err})
+            .code(500)
+    })
   }
 });
 
