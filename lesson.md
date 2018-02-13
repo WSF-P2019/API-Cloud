@@ -48,6 +48,7 @@ async function myFunction(a, b) {
 ### 5. Middlewares
 
 Viens s'intercaler entre la request et la response pour exécuter quelques choses.
+
 Il peut y avoir plusieurs middlewares. req ==> middleware1, middleware2 ==> res
 
 ## Annexes:
@@ -57,11 +58,24 @@ URI = A partir du /example (domaine.com/example)
 
 ### Route code
 2XX = bien passé
+
 200: OK
+
 201: Created
+
 202: Accepted
+
 204: No-Content (delete)
+
+
 4XX = User errors
+
 403: Not authorized
+
 404: Not found
+
+
 5XX = Server errors
+
+
+ForeignKey = Clef seconde, qui fait toujours référence à une PrimaryKey.
