@@ -20,7 +20,7 @@ try {
 const server = new Hapi.Server(settings.http);
 
 server.route(require('./routes/users/getUsers'));
-server.route(require('./routes/users/getUsersId'));
+server.route(require('./routes/users/getUserById'));
 
 async function start() {
     try {
