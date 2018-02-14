@@ -3,8 +3,8 @@ const db = require('../../utils/database');
 const tittle = require('tittle');
 
 module.exports = {
-  method: 'DELETE',
-  path: '/users/{id}',
+  method: 'GET',
+  path: '/posts/{id}',
   config: {
       validate: {
           params: joi.object().keys({
@@ -17,8 +17,12 @@ module.exports = {
   },
   handler: async function (req, handler) {
 
-    const query = db.delete().from('users').where({id: req.params.id}) // We are passing an object to authorized multiple conditions
-    let [isDeleted, error] = await tittle(query);
+    const query = db.select()
+      .from('posts')
+      .innerJoin('users', 'posts.user_id', '=', 'users.id')
+      .innerJoin('comments', 'posts.id', '=', 'comments.post_id')
+      .where({'posts.id': req.params.id})
+    let [post, error] = await tittle(query);
     if (error) {
         return handler.response({
             statusCode: 400,
@@ -27,8 +31,8 @@ module.exports = {
     }
 
     return handler.response({
-        statusCode: 204,
-        data: isDeleted
-    }).code(204)
+        statusCode: 200,
+        data: post
+    }).code(200)
   }
 }

@@ -44,8 +44,8 @@ module.exports = {
     }
 
     return handler.response({
-        statusCode: 200,
+        statusCode: 201,
         data: userData
-    }).code(200)
+    }).code(201)
   }
 }

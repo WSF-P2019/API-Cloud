@@ -28,6 +28,11 @@ server.route(require('./routes/users/postUser'));
 server.route(require('./routes/users/deleteUserById'));
 server.route(require('./routes/users/putUserById'));
 
+/**
+ * Posts routes
+ */
+server.route(require('./routes/posts/getPostById'));
+
 async function start() {
     try {
         await server.start();
