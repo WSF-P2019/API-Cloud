@@ -11,21 +11,21 @@ module.exports = {
           })
       }
   },
-  handler: function (req, handler) {
-    return db.select().from('users').where({
-        id: req.params.id // We are passing an object to authorized multiple conditions
-      })
-    .then( function (data) {
-        return handler.response({
-            statusCode: 200,
-            data: data[0]
-          }).code(200)
-    })
-    .catch(error => {
+  handler: async function (req, handler) {
+    let user = [];
+    try{
+        user = await db.select().from('users').where({
+            id: req.params.id // We are passing an object to authorized multiple conditions
+        })
+    } catch (error) {
         return handler.response({
             statusCode: 400,
             error: 'Something bad happened: + explicit error'
-          }).code(400)
-    })
+        }).code(400)
+    }
+    return handler.response({
+        statusCode: 200,
+        data: user[0]
+    }).code(200)
   }
 }

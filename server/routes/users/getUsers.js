@@ -2,21 +2,21 @@ const joi = require('joi');
 const db = require('../../utils/database');
 
 module.exports = {
-  method: 'GET',
-  path: '/users',
-  handler: function (req, handler) {
-    return db.select().from('users')
-    .then( function (data) {
+    method: 'GET',
+    path: '/users',
+    handler: async function (req, handler) {
+        let users = [];
+        try{
+            users = await db.select().from('users')
+        } catch (error) {
+            return handler.response({
+                statusCode: 400,
+                error: 'Something bad happened: + explicit error'
+            }).code(400)
+        }
         return handler.response({
             statusCode: 200,
-            data
+            data: users
         }).code(200)
-    })
-    .catch(error => {
-        return handler.response({
-            statusCode: 400,
-            error: 'Something bad happened: + explicit error'
-        }).code(400)
-    })
-  }
+    }
 }
