@@ -8,7 +8,10 @@ module.exports = {
   config: {
       validate: {
           params: joi.object().keys({
-              id: joi.number().integer().positive().required()
+            id: [
+                joi.string().required(),
+                joi.number().integer().positive().required()
+            ]
           })
       }
   },

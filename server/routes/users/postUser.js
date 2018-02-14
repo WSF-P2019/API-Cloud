@@ -8,8 +8,12 @@ module.exports = {
   config: {
       validate: {
         payload: joi.object().keys({
-          first_name: joi.string().token().required(),
-          last_name: joi.string().token().required(),
+          first_name: joi.string().required(),
+          last_name: joi.string().required(),
+          is_admin: joi.boolean().default(false),
+          website_url: joi.string().uri({
+            scheme: ['http', 'https']
+          }),
           country_id: joi.number().integer().positive().required()
         })
       }
@@ -18,6 +22,8 @@ module.exports = {
     const query = db('users').insert({
       first_name: req.payload.first_name,
       last_name: req.payload.last_name,
+      is_admin: req.payload.is_admin,
+      website_url: req.payload.website_url,
       country_id: req.payload.country_id
     })
     let [userId, errorQuery] = await tittle(query);
