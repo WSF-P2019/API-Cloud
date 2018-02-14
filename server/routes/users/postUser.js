@@ -20,7 +20,7 @@ module.exports = {
       last_name: req.payload.last_name,
       country_id: req.payload.country_id
     })
-    [userId, errorQuery] = await tittle(query);
+    let [userId, errorQuery] = await tittle(query);
     if (errorQuery) {
         return handler.response({
             statusCode: 400,
