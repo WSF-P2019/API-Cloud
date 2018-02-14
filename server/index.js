@@ -24,6 +24,9 @@ const server = new Hapi.Server(settings.http);
  */
 server.route(require('./routes/users/getUsers'));
 server.route(require('./routes/users/getUserById'));
+server.route(require('./routes/users/postUser'));
+server.route(require('./routes/users/deleteUserById'));
+server.route(require('./routes/users/putUserById'));
 
 async function start() {
     try {
