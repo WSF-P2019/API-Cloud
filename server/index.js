@@ -35,8 +35,10 @@ server.route(require('./routes/posts/getPostById'));
 
 async function start() {
     await server.register({
-        plugin.require('./plugins/token'),
-        options: {}
+        plugin: require('./plugins/token'),
+        options: {
+            name: 'toto'
+        }
     });
 
     try {

@@ -8,7 +8,8 @@ module.exports = {
     routes: {
       cors: {
         //methods: ['GET'],
-        origin: ['dashboard.wsf.com', '*.wsf.com', 'wsf.com', '*']
+        //origin: ['dashboard.wsf.com', '*.wsf.com', 'wsf.com', '*']
+        origin: ['*']
       }
     }
   }

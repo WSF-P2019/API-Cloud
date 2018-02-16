@@ -81,6 +81,15 @@ Exemple: POST or PUT user, qui peut mettre un fichier, il faut que la size soit 
 ### WORKFLOW / PROCESS : ETL - Extraction, Transformation, Loading de data:
 Pour faire de l'analytics, base de donnée commune pour analyser la DB transactionnelle et la DB Time-Series (le cache en général ça sert à rien de l'analyser). Qui tape donc dans une dernière DB.
 
+## Type d'API:
+### SOAP:
+A oublier, année 90, développé en Java ou .NET.
+
+### REST:
+Route d'API distinctes les unes des autres et séparées par ressources.
+
+### GraphQL:
+
 ## Annexes:
 
 URL = Toute l'URL avec le http:// etc.
