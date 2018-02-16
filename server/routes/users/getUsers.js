@@ -21,7 +21,7 @@ module.exports = {
         const query = db.select()
             .from('users')
             .limit(10)
-            .offset(pageNumber * 10 );
+            .offset(pageNumber * 10);
         let [users, error] = await tittle(query);
         if (error) {
             return handler.response({

@@ -1,2 +1,4 @@
 node_modules
 mineur/faker/migrations/save.sql
+settings/development.js
+settings/production.js

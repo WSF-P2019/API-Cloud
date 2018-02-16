@@ -34,6 +34,11 @@ server.route(require('./routes/users/putUserById'));
 server.route(require('./routes/posts/getPostById'));
 
 async function start() {
+    await server.register({
+        plugin.require('./plugins/token'),
+        options: {}
+    });
+
     try {
         await server.start();
     }

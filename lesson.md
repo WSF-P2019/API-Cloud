@@ -51,6 +51,36 @@ Viens s'intercaler entre la request et la response pour exécuter quelques chose
 
 Il peut y avoir plusieurs middlewares. req ==> middleware1, middleware2 ==> res
 
+## Mesure de sécurité principale à mettre en place sur une API:
+
+### CORS (Cross origin ressource sharing) - Vérification de la provenance d'une request:
+Exemple: www.bar.com qui fait des requests sur api.bar.com, il faut vérifier que les users qui font les requests sont autorisés à faire les requests. Quels sont les domaines qui sont autorisés à faire des requêtes sur notre API. Quelles sont les méthods que l'on autorisent.
+
+### CSRF (Token unique):
+Token unique que le back connait. Protection des routes d'API via un token unique sur les routes formulaires.
+
+### Headers:
+X-API-Key ou X-API-Token sont présents sur chacune des requests. On vérifie que les headers pour l'authentification sont présents.
+
+### Request-rate limiting:
+Demande du cache avec une base de donnée dédiée, tel ou tel users n'ont pas le droit de faire plus de X requests / minutes. Sur Twitter par exemple il y a une limite (pas plus de 400req/min/ip).
+
+### Request-size limiting:
+Exemple: POST or PUT user, qui peut mettre un fichier, il faut que la size soit limitée, sinon on plante le serveur. On limite donc la taille en byte, de la requête (seulement quelques bytes).
+
+### Déroulé de l'action lors d'une request:
+1. On vérifie les CORS
+2. Plugin (middleware): vérifié les headers
+3. Validations router
+4. Handler (donc traitement de la request) puis envois de la response
+
+## DataBase pour les API:
+### Transactionnelle (donnée de production - temps réel)
+### Cache (donnée de production - temps réel)
+### Time-Series (donnée de production - temps réel)
+### WORKFLOW / PROCESS : ETL - Extraction, Transformation, Loading de data:
+Pour faire de l'analytics, base de donnée commune pour analyser la DB transactionnelle et la DB Time-Series (le cache en général ça sert à rien de l'analyser). Qui tape donc dans une dernière DB.
+
 ## Annexes:
 
 URL = Toute l'URL avec le http:// etc.
